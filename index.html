@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>复杂表单快照时间机</title>
+    <link rel="stylesheet" href="src/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">IndexedDB · Web Worker · Canvas · No Framework</p>
+        <h1>复杂表单快照时间机</h1>
+        <p class="subtitle">随时命名保存、无损压缩、分支检测、版本迁移、导入导出与时间旅行回放。</p>
+      </div>
+      <div class="header-actions">
+        <button id="exportBtn" type="button" class="button secondary">导出快照</button>
+        <label class="button secondary file-button">
+          导入快照
+          <input id="importInput" type="file" accept="application/json,.json" hidden>
+        </label>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel" aria-labelledby="formTitle">
+        <div class="panel-heading">
+          <div>
+            <h2 id="formTitle">复杂表单</h2>
+            <p id="statusLine" class="muted">正在加载本地状态…</p>
+          </div>
+          <span id="saveBadge" class="badge">已同步</span>
+        </div>
+        <div id="previewBanner" class="preview-banner hidden"></div>
+        <form id="formRoot"></form>
+        <section class="retired-panel">
+          <h3>历史/兼容字段</h3>
+          <p class="muted">字段删除、类型变化、未知字段和未来版本数据都在这里保留，回滚与导出不会丢弃。</p>
+          <pre id="retiredView" class="json-view">{}</pre>
+        </section>
+      </section>
+
+      <aside class="side-column">
+        <section class="panel">
+          <h2>保存快照</h2>
+          <label class="field-label" for="snapshotName">快照名称</label>
+          <input id="snapshotName" class="text-input" type="text" placeholder="例如：评审后调整预算">
+          <label class="field-label" for="parentSelect">父快照</label>
+          <select id="parentSelect" class="text-input"></select>
+          <button id="createSnapshotBtn" type="button" class="button primary full">创建快照</button>
+          <button id="legacySampleBtn" type="button" class="button secondary full">插入 v1 兼容示例</button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading compact">
+            <h2>时间线</h2>
+            <button id="playBtn" type="button" class="button tiny">回放</button>
+          </div>
+          <canvas id="timelineCanvas" class="timeline-canvas"></canvas>
+          <div class="legend">
+            <span><i class="dot blue"></i>选中</span>
+            <span><i class="dot green"></i>当前</span>
+            <span><i class="dot purple"></i>回放</span>
+            <span><i class="dot red"></i>损坏</span>
+            <span><i class="branch-line"></i>分支</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>快照列表</h2>
+          <div id="snapshotList" class="snapshot-list"></div>
+        </section>
+
+        <section class="panel">
+          <h2>快照对比</h2>
+          <div class="compare-grid">
+            <select id="compareLeft" class="text-input"></select>
+            <select id="compareRight" class="text-input"></select>
+          </div>
+          <button id="compareBtn" type="button" class="button secondary full">比较选中快照</button>
+          <div id="diffView" class="diff-view empty">选择两个快照查看差异</div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

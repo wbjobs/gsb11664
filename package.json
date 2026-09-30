@@ -1,0 +1,12 @@
+{
+  "name": "complex-form-snapshot-time-machine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node --test test/*.test.js"
+  },
+  "description": "No-framework complex form snapshot, conflict detection, rollback and time travel demo.",
+  "license": "UNLICENSED"
+}
