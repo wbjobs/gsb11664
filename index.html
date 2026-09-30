@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>表单快照 · 时间旅行</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>复杂表单快照与时间旅行</h1>
+  <div class="topbar-actions">
+    <button id="btnSnapshot" class="primary">📸 创建快照</button>
+    <button id="btnFillDemo">填充示例</button>
+    <button id="btnExport">导出快照</button>
+    <label class="import-label">
+      导入快照<input type="file" id="fileImport" accept=".json" hidden>
+    </label>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- 左侧：复杂表单 -->
+  <section class="panel form-panel">
+    <div class="panel-title">
+      <h2>项目申报表</h2>
+      <span id="dirtyBadge" class="badge hidden">未保存修改</span>
+    </div>
+    <form id="complexForm" autocomplete="off"></form>
+    <section id="legacySection" class="legacy hidden">
+      <h3>遗留字段（旧版本快照中的字段，已不在当前表单结构中，数据未丢失）</h3>
+      <div id="legacyFields"></div>
+    </section>
+  </section>
+
+  <!-- 右侧：快照体系 -->
+  <aside class="side">
+    <section class="panel">
+      <h2>时间线</h2>
+      <canvas id="timeline" height="120"></canvas>
+      <div id="timelineTip" class="tip hidden"></div>
+      <div class="replay-bar">
+        <button id="btnReplayPlay" title="回放">▶</button>
+        <button id="btnReplayPrev" title="上一个">⏮</button>
+        <button id="btnReplayNext" title="下一个">⏭</button>
+        <select id="replaySpeed">
+          <option value="1600">0.5x</option>
+          <option value="800" selected>1x</option>
+          <option value="300">2.5x</option>
+        </select>
+        <span id="replayStatus" class="muted">回放空闲</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>快照列表 <span id="snapCount" class="muted"></span></h2>
+      <ul id="snapshotList" class="snapshot-list"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>快照对比</h2>
+      <div class="diff-controls">
+        <select id="diffA"></select>
+        <span class="muted">→</span>
+        <select id="diffB"></select>
+        <button id="btnDiff">对比</button>
+      </div>
+      <div id="diffResult" class="diff-result muted">选择两个快照进行对比</div>
+    </section>
+
+    <section class="panel">
+      <h2>日志</h2>
+      <ul id="log" class="log"></ul>
+    </section>
+  </aside>
+</main>
+
+<!-- 快照命名对话框 -->
+<dialog id="nameDialog">
+  <form method="dialog">
+    <h3>命名快照</h3>
+    <input id="snapshotName" type="text" placeholder="例如：预算调整前" maxlength="40">
+    <div class="dialog-actions">
+      <button value="cancel">取消</button>
+      <button id="btnConfirmSnapshot" value="default" class="primary">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/schema.js"></script>
+<script src="js/db.js"></script>
+<script src="js/snapshot.js"></script>
+<script src="js/form.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
